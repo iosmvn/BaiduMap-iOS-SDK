@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 
 @interface AnnotationDemoViewController : UIViewController <BMKMapViewDelegate>{
 	IBOutlet BMKMapView* _mapView;

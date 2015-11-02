@@ -82,11 +82,11 @@
 {
     [_offlineMap pause:[cityId.text floatValue]];
 }
-//扫瞄离线包
+//扫瞄离线包(自2.9.0起废弃)
 -(IBAction)scan:(id)sender
 {
-    [_offlineMap scan:NO];
-    
+//    扫瞄离线包(自2.9.0起废弃)
+//    [_offlineMap scan:NO];
 }
 //删除本地离线包
 -(IBAction)remove:(id)sender

@@ -10,7 +10,7 @@
 #define IphoneMapSdkDemo_OpenBaiduMapDemo_h
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
 @interface OpenBaiduMapDemo : UITableViewController {
     NSArray *_titleArray;

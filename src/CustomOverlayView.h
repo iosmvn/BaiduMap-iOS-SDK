@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import "CustomOverlay.h"
 @interface CustomOverlayView : BMKOverlayGLBasicView
 - (id)initWithCustomOverlay:(CustomOverlay *)customOverlay;

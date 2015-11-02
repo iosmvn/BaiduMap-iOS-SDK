@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 @interface MultiMapViewDemo :  UIViewController <BMKMapViewDelegate>{
     BMKMapView* mapView1;
     BMKMapView* mapView2;

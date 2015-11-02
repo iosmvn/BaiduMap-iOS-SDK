@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 @interface HeatMapDemo :  UIViewController <BMKMapViewDelegate>{
     IBOutlet BMKMapView* mapView;
     IBOutlet UIButton* addHeatMapBtn;

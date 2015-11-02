@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-#import <BaiduMapAPI/BMKVersion.h>
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>
 
 @implementation RootViewController
 
@@ -35,6 +35,8 @@
                       @"OpenGL绘制功能-OpenGLDemo",
                       @"收藏夹功能-FavoritesDemo",
                       @"周边雷达功能-Radar",
+                      @"点聚合功能-ClusterDemo",
+                      @"tileLayer功能-TileLayerDemo",
 					  nil];
     _viewControllerTitleArray = [[NSArray alloc]initWithObjects:
                                  @"基本地图功能",
@@ -57,6 +59,8 @@
                                  @"OpenGL绘制功能",
                                  @"收藏夹功能",
                                  @"周边雷达功能",
+                                 @"点聚合功能",
+                                 @"tileLayer功能",
                                  nil];
     
     _viewControllerArray = [[NSArray alloc]initWithObjects:
@@ -80,6 +84,8 @@
                             @"OpenGLDemoViewController",
                             @"FavoritesDemoViewController",
                             @"RadarTabBarController",
+                            @"ClusterDemoViewController",
+                            @"TileLayerDemoViewController",
                             nil];
 	self.title = [NSString stringWithFormat: @"欢迎使用百度地图iOS SDK %@", BMKGetMapApiVersion()];
     //适配ios7

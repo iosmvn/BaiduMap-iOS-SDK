@@ -9,6 +9,7 @@
 #import "WayPointRouteSearchDemoViewController.h"
 #import "PoiSearchDemoViewController.h"
 #import "UIImage+Rotate.h"
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
 #define MYBUNDLE_NAME @ "mapapi.bundle"
 #define MYBUNDLE_PATH [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: MYBUNDLE_NAME]
@@ -231,7 +232,7 @@
     if (error == BMK_SEARCH_NO_ERROR) {
 		BMKTransitRouteLine* plan = (BMKTransitRouteLine*)[result.routes objectAtIndex:0];
         // 计算路线方案中的路段数目
-		int size = [plan.steps count];
+		NSInteger size = [plan.steps count];
 		int planPointCounts = 0;
 		for (int i = 0; i < size; i++) {
             BMKTransitStep* transitStep = [plan.steps objectAtIndex:i];
@@ -288,7 +289,7 @@
 	if (error == BMK_SEARCH_NO_ERROR) {
         BMKDrivingRouteLine* plan = (BMKDrivingRouteLine*)[result.routes objectAtIndex:0];
         // 计算路线方案中的路段数目
-		int size = [plan.steps count];
+		NSInteger size = [plan.steps count];
 		int planPointCounts = 0;
 		for (int i = 0; i < size; i++) {
             BMKDrivingStep* transitStep = [plan.steps objectAtIndex:i];
@@ -357,7 +358,7 @@
 	[_mapView removeOverlays:array];
 	if (error == BMK_SEARCH_NO_ERROR) {
         BMKWalkingRouteLine* plan = (BMKWalkingRouteLine*)[result.routes objectAtIndex:0];
-		int size = [plan.steps count];
+		NSInteger size = [plan.steps count];
 		int planPointCounts = 0;
 		for (int i = 0; i < size; i++) {
             BMKWalkingStep* transitStep = [plan.steps objectAtIndex:i];

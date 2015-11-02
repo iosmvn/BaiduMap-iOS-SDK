@@ -7,9 +7,8 @@
 //
 
 #import "AppDelegate.h"
-
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import "RootViewController.h"
-#import "RadarTabBarController.h"
 
 //NAMESPACE_BAIDU_FRAMEWORK_USE
 
@@ -27,19 +26,12 @@ BMKMapManager* _mapManager;
     
 	// 要使用百度地图，请先启动BaiduMapManager
 	_mapManager = [[BMKMapManager alloc]init];
-    BOOL ret = [_mapManager start:@"please enter your key" generalDelegate:self];
-
+    BOOL ret = [_mapManager start:@"9p40ht15kt153TCCeQgPQgsy" generalDelegate:self];
 	if (!ret) {
 		NSLog(@"manager start failed!");
 	}
+    
     [self.window setRootViewController:navigationController];
-    
-    //radar demo
-//    self.window.bounds = [[UIScreen mainScreen] bounds];
-//    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil] instantiateViewControllerWithIdentifier:@"RadarTabBarController"];
-//    self.window.rootViewController = vc;
-    
-    
     [self.window makeKeyAndVisible];
     return YES;
 }

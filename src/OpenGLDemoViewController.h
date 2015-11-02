@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
 @interface OpenGLDemoViewController : UIViewController <BMKMapViewDelegate>{
     IBOutlet BMKMapView* _mapView;

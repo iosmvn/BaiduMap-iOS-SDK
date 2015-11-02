@@ -84,6 +84,10 @@
             [_mapView setBaiduHeatMapEnabled:isOn];
             break;
             
+        case 3:
+            [_mapView setShowMapPoi:isOn];
+            break;
+            
         default:
             break;
     }

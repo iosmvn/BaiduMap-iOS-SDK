@@ -6,7 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
 
 @interface PoiSearchDemoViewController : UIViewController<BMKMapViewDelegate, BMKPoiSearchDelegate> {
 	IBOutlet BMKMapView* _mapView;

@@ -16,6 +16,7 @@
     BMKPolygon* polygon;
     BMKPolygon* polygon2;
     BMKPolyline* polyline;
+    BMKPolyline* colorfulPolyline;
     BMKArcline* arcline;
     BMKGroundOverlay* ground2;
     BMKPointAnnotation* pointAnnotation;
@@ -100,8 +101,8 @@
         ground2.alpha = 0.8;
     }
     [_mapView addOverlay:ground2];
-    _mapView.zoomLevel = 14;
-    _mapView.centerCoordinate = CLLocationCoordinate2DMake(39.9255, 116.3995);
+//    _mapView.zoomLevel = 14;
+//    _mapView.centerCoordinate = CLLocationCoordinate2DMake(39.9255, 116.3995);
 }
 
 //添加内置覆盖物
@@ -158,6 +159,31 @@
     }
     [_mapView addOverlay:polyline];
     
+    //添加折线(分段颜色绘制)覆盖物
+    if (colorfulPolyline == nil) {
+        CLLocationCoordinate2D coords[5] = {0};
+        coords[0].latitude = 39.965;
+        coords[0].longitude = 116.404;
+        coords[1].latitude = 39.925;
+        coords[1].longitude = 116.454;
+        coords[2].latitude = 39.955;
+        coords[2].longitude = 116.494;
+        coords[3].latitude = 39.905;
+        coords[3].longitude = 116.554;
+        coords[4].latitude = 39.965;
+        coords[4].longitude = 116.604;
+        //构建分段颜色索引数组
+        NSArray *colorIndexs = [NSArray arrayWithObjects:
+                                [NSNumber numberWithInt:2],
+                                [NSNumber numberWithInt:0],
+                                [NSNumber numberWithInt:1],
+                                [NSNumber numberWithInt:2], nil];
+        
+        //构建BMKPolyline,使用分段颜色索引，其对应的BMKPolylineView必须设置colors属性
+        colorfulPolyline = [BMKPolyline polylineWithCoordinates:coords count:5 textureIndex:colorIndexs];
+    }
+    [_mapView addOverlay:colorfulPolyline];
+    
     // 添加圆弧覆盖物
     if (arcline == nil) {
         CLLocationCoordinate2D coords[3] = {0};
@@ -201,6 +227,10 @@
     [_mapView addAnnotation:animatedAnnotation];
 }
 
+
+#pragma mark -
+#pragma mark implement BMKMapViewDelegate
+
 //根据overlay生成对应的View
 - (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id <BMKOverlay>)overlay
 {
@@ -217,10 +247,15 @@
     if ([overlay isKindOfClass:[BMKPolyline class]])
     {
         BMKPolylineView* polylineView = [[BMKPolylineView alloc] initWithOverlay:overlay];
-        polylineView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:1];
-        polylineView.lineWidth = 20.0;
-        [polylineView loadStrokeTextureImage:[UIImage imageNamed:@"texture_arrow.png"]];
-
+        if (overlay == colorfulPolyline) {
+            polylineView.lineWidth = 5;
+            /// 使用分段颜色绘制时，必须设置（内容必须为UIColor）
+            polylineView.colors = [NSArray arrayWithObjects:[UIColor greenColor], [UIColor redColor], [UIColor yellowColor], nil];
+        } else {
+            polylineView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:1];
+            polylineView.lineWidth = 20.0;
+            [polylineView loadStrokeTextureImage:[UIImage imageNamed:@"texture_arrow.png"]];
+        }
 		return polylineView;
     }
 	
@@ -248,8 +283,6 @@
 	return nil;
 }
 
-#pragma mark -
-#pragma mark implement BMKMapViewDelegate
 
 // 根据anntation生成对应的View
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation

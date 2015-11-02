@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>
 
 @interface AppDelegate : NSObject <UIApplicationDelegate, BMKGeneralDelegate> {
     UIWindow *window;

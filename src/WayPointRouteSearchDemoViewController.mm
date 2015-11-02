@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 Baidu. All rights reserved.
 //
 
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 #import "WayPointRouteSearchDemoViewController.h"
 #import "UIImage+Rotate.h"
 
@@ -75,7 +76,6 @@
     _mapView.delegate = nil; // 不用时，置nil
     _routesearch.delegate = nil; // 不用时，置nil
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -204,7 +204,7 @@
 	if (error == BMK_SEARCH_NO_ERROR) {
         BMKDrivingRouteLine* plan = (BMKDrivingRouteLine*)[result.routes objectAtIndex:0];
         // 计算路线方案中的路段数目
-		int size = [plan.steps count];
+		NSInteger size = [plan.steps count];
 		int planPointCounts = 0;
 		for (int i = 0; i < size; i++) {
             BMKDrivingStep* transitStep = [plan.steps objectAtIndex:i];

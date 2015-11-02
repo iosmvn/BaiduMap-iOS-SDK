@@ -7,8 +7,8 @@
 //
 
 #import "RadarNearbyViewController.h"
-#import <BaiduMapAPI/BMapKit.h>
-#import <BaiduMapAPI/BMKRadarComponent.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>
 #import "RadarUploadViewController.h"
 
 @interface RadarNearbyViewController ()<UITableViewDataSource, UITableViewDelegate, BMKMapViewDelegate, BMKRadarManagerDelegate> {

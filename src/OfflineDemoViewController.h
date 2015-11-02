@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 
 @interface OfflineDemoViewController :UIViewController<BMKMapViewDelegate,BMKOfflineMapDelegate>
 {
@@ -31,7 +31,6 @@
 }
 -(IBAction)start:(id)sender;
 -(IBAction)stop:(id)sender;
--(IBAction)scan:(id)sender;
 -(IBAction)search:(id)sender;
 -(IBAction)remove:(id)sender;
 -(IBAction)textFiledReturnEditing:(id)sender;

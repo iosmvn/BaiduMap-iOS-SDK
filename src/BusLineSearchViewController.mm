@@ -193,7 +193,7 @@
 	if (error == BMK_SEARCH_NO_ERROR) {
         BMKPoiInfo* poi = nil;
         BOOL findBusline = NO;
-		for (int i = 0; i < result.poiInfoList.count; i++) {
+		for (NSInteger i = 0; i < result.poiInfoList.count; i++) {
 			poi = [result.poiInfoList objectAtIndex:i];
             if (poi.epoitype == 2 || poi.epoitype == 4) {
                 findBusline = YES;
@@ -233,9 +233,9 @@
         BusLineAnnotation* item = [[BusLineAnnotation alloc]init];
         
         //站点信息
-        int size = 0;   
+        NSInteger size = 0;
         size = busLineResult.busStations.count;
-        for (int j = 0; j < size; j++) {
+        for (NSInteger j = 0; j < size; j++) {
             BMKBusStation* station = [busLineResult.busStations objectAtIndex:j];
             item = [[BusLineAnnotation alloc]init];
             item.coordinate = station.location;
@@ -246,18 +246,18 @@
         
    
         //路段信息
-        int index = 0;
+        NSInteger index = 0;
         //累加index为下面声明数组temppoints时用
-        for (int j = 0; j < busLineResult.busSteps.count; j++) {
+        for (NSInteger j = 0; j < busLineResult.busSteps.count; j++) {
             BMKBusStep* step = [busLineResult.busSteps objectAtIndex:j];
             index += step.pointsCount;
         }
         //直角坐标划线
         BMKMapPoint * temppoints = new BMKMapPoint[index];
-        int k=0;
-		for (int i = 0; i < busLineResult.busSteps.count; i++) {
+        NSInteger k=0;
+		for (NSInteger i = 0; i < busLineResult.busSteps.count; i++) {
             BMKBusStep* step = [busLineResult.busSteps objectAtIndex:i];
-			for (int j = 0; j < step.pointsCount; j++) {
+			for (NSInteger j = 0; j < step.pointsCount; j++) {
                     BMKMapPoint pointarray;
                     pointarray.x = step.points[j].x;
                     pointarray.y = step.points[j].y;

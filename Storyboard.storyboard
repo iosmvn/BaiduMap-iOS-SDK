@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
         <!--检索周边-->
@@ -253,6 +253,30 @@
             </objects>
             <point key="canvasLocation" x="110" y="1042"/>
         </scene>
+        <!--Cluster Demo View Controller-->
+        <scene sceneID="WNc-61-Tub">
+            <objects>
+                <viewController storyboardIdentifier="ClusterDemoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tgp-aj-vh9" customClass="ClusterDemoViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sYL-SS-S9O">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="Ioc-zx-Aa1" customClass="BMKMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="Ioc-zx-Aa1" id="dS3-hh-aV4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r0l-vi-fkr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="110" y="1674"/>
+        </scene>
         <!--上传位置-->
         <scene sceneID="1Ht-E3-RW3">
             <objects>
@@ -371,14 +395,46 @@
             </objects>
             <point key="canvasLocation" x="-264" y="99.400000000000006"/>
         </scene>
+        <!--Tile Layer Demo View Controller-->
+        <scene sceneID="GHo-fR-MoZ">
+            <objects>
+                <viewController storyboardIdentifier="TileLayerDemoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PJz-YD-xYk" customClass="TileLayerDemoViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="f21-TQ-F2F">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="1aC-4O-vUS" customClass="BMKMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <segmentedControl opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="jST-8h-Tkb">
+                                <rect key="frame" x="47" y="10" width="227" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <segments>
+                                    <segment title="清除"/>
+                                    <segment title="本地"/>
+                                    <segment title="在线"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentAction:" destination="PJz-YD-xYk" eventType="valueChanged" id="3Kq-eA-yun"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="1aC-4O-vUS" id="7LY-Z9-PpG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ifc-36-LcY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="110" y="2329"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="radar_search.png" width="25" height="25"/>
-        <image name="radar_upload.png" width="25" height="25"/>
+        <image name="radar_search.png" width="22" height="22"/>
+        <image name="radar_upload.png" width="22" height="22"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 baidu. All rights reserved.
 //
 
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 
 @interface CustomOverlay : BMKShape<BMKOverlay>
 {

@@ -277,7 +277,7 @@
                         MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
                         picker.messageComposeDelegate = self;
                         picker.body = [NSString stringWithFormat:@"%@",showmeg];
-                        [self presentModalViewController:picker animated:YES];
+                        [self presentViewController:picker animated:YES completion:nil];
                     } else {
                         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"当前设备暂时没有办法发送短信" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
                         [myAlertView show];
@@ -319,7 +319,7 @@
             NSLog(@"短信没有发送");
 			break;
 	}
-	[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 //根据anntation生成对应的标注View
 - (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation

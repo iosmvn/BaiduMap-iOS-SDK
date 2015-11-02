@@ -7,8 +7,9 @@
 //
 
 #import "RadarUploadViewController.h"
-#import <BaiduMapAPI/BMapKit.h>
-#import <BaiduMapAPI/BMKRadarComponent.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>
 #import "PromptInfo.h"
 
 @interface RadarUploadViewController ()<BMKLocationServiceDelegate, BMKRadarManagerDelegate> {

@@ -50,12 +50,12 @@ static PromptInfo *toast=nil;
         UIFont *font = [UIFont boldSystemFontOfSize:15];  
         CGSize textSize = [text sizeWithFont:font  
                            constrainedToSize:CGSizeMake(280, MAXFLOAT)  
-                               lineBreakMode:UILineBreakModeWordWrap];  
+                               lineBreakMode:NSLineBreakByWordWrapping];
         
         textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, textSize.width + 12, textSize.height + 12)];  //UILabel *
         textLabel.backgroundColor = [UIColor clearColor];  
         textLabel.textColor = [UIColor whiteColor];  
-        textLabel.textAlignment = UITextAlignmentCenter;  
+        textLabel.textAlignment = NSTextAlignmentCenter;
         textLabel.font = font;  
         textLabel.text = text;  
         textLabel.numberOfLines = 0;  
@@ -91,7 +91,7 @@ static PromptInfo *toast=nil;
      UIFont *font = [UIFont boldSystemFontOfSize:15];  
      CGSize textSize = [text sizeWithFont:font  
                         constrainedToSize:CGSizeMake(280, MAXFLOAT)  
-                            lineBreakMode:UILineBreakModeWordWrap];  
+                            lineBreakMode:NSLineBreakByWordWrapping];
      
  
      textLabel.frame=CGRectMake(10, 10, textSize.width + 12, textSize.height + 12);

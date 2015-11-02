@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
 
 @interface BusLineSearchViewController : UIViewController<BMKMapViewDelegate, BMKBusLineSearchDelegate,BMKPoiSearchDelegate> {
 	IBOutlet BMKMapView* _mapView;

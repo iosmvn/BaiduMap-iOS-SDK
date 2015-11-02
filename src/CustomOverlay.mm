@@ -37,7 +37,7 @@
 		}
 		memcpy(_points, points, sizeof(BMKMapPoint)*count);
         
-		_pointCount = count;
+		_pointCount = (int)count;
 	}
 	return self;
 }
@@ -61,6 +61,12 @@
     }
 
 	return _boundingMapRect;
+}
+
+- (void)dealloc {
+    if (_points != nil) {
+        delete [] _points;
+    }
 }
 
 @end

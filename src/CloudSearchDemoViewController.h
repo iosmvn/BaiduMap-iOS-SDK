@@ -6,7 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>
 
 @interface CloudSearchDemoViewController : UIViewController<BMKMapViewDelegate, BMKCloudSearchDelegate> {
 	IBOutlet BMKMapView* _mapView;
