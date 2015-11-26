@@ -1,25 +1,25 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++6417",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++9944",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++6417" : {
+    "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++9944" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++6417" : 0
+    "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++9944" : 0
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1DC82566-7C59-4B0A-891F-43F91BE2B858",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CA2BB36D-EC73-4725-BAF9-349AAA1C23EF",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++6417" : "iphone\/"
+    "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++9944" : "iphone\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "IphoneMapSdkDemo",
-  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "IphoneMapSdkDemo\/IphoneMapSdkDemo.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/svn.baidu.com\/app\/search\/lbs-mobile",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++6417"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8ad7a1e4-d245-4f8c-a8c5-1a570503e5db++9944"
     }
   ]
 }

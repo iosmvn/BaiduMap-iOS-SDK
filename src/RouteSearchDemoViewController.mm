@@ -215,8 +215,8 @@
 {
 	if ([overlay isKindOfClass:[BMKPolyline class]]) {
         BMKPolylineView* polylineView = [[BMKPolylineView alloc] initWithOverlay:overlay];
-        polylineView.fillColor = [[UIColor cyanColor] colorWithAlphaComponent:1];
-        polylineView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.7];
+        polylineView.fillColor = [[UIColor alloc] initWithRed:0 green:1 blue:1 alpha:1];
+        polylineView.strokeColor = [[UIColor alloc] initWithRed:0 green:0 blue:1 alpha:0.7];
         polylineView.lineWidth = 3.0;
         return polylineView;
     }

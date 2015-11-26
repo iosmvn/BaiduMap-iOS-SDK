@@ -237,8 +237,8 @@
 	if ([overlay isKindOfClass:[BMKCircle class]])
     {
         BMKCircleView* circleView = [[BMKCircleView alloc] initWithOverlay:overlay];
-        circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
-        circleView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
+        circleView.fillColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.5];
+        circleView.strokeColor = [[UIColor alloc] initWithRed:0 green:0 blue:1 alpha:0.5];
         circleView.lineWidth = 5.0;
 
 		return circleView;
@@ -250,7 +250,10 @@
         if (overlay == colorfulPolyline) {
             polylineView.lineWidth = 5;
             /// 使用分段颜色绘制时，必须设置（内容必须为UIColor）
-            polylineView.colors = [NSArray arrayWithObjects:[UIColor greenColor], [UIColor redColor], [UIColor yellowColor], nil];
+            polylineView.colors = [NSArray arrayWithObjects:
+                                   [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:1],
+                                   [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:1],
+                                   [[UIColor alloc] initWithRed:1 green:1 blue:0 alpha:0.5], nil];
         } else {
             polylineView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:1];
             polylineView.lineWidth = 20.0;
@@ -262,8 +265,8 @@
 	if ([overlay isKindOfClass:[BMKPolygon class]])
     {
         BMKPolygonView* polygonView = [[BMKPolygonView alloc] initWithOverlay:overlay];
-        polygonView.strokeColor = [[UIColor purpleColor] colorWithAlphaComponent:1];
-        polygonView.fillColor = [[UIColor cyanColor] colorWithAlphaComponent:0.2];
+        polygonView.strokeColor = [[UIColor alloc] initWithRed:0.0 green:0 blue:0.5 alpha:1];
+        polygonView.fillColor = [[UIColor alloc] initWithRed:0 green:1 blue:1 alpha:0.2];
         polygonView.lineWidth =2.0;
         polygonView.lineDash = (overlay == polygon2);
 		return polygonView;
