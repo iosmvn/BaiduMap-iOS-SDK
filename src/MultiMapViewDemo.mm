@@ -7,18 +7,7 @@
 
 #import "MultiMapViewDemo.h"
 @implementation MultiMapViewDemo
-- (id)init
-{
-    self = [super init];
-    
-    if(self)
-    {
 
-    }
-    
-    return self;
-    
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //适配ios7
@@ -31,6 +20,7 @@
     mapView1 = [[BMKMapView alloc]initWithFrame:CGRectMake(10, 3, width, height)];
     mapView1.mapType = BMKMapTypeSatellite;
     mapView1.zoomLevel = 14;
+    mapView1.logoPosition = BMKLogoPositionRightTop;
     [self.view addSubview:mapView1];
     UIView* splitline = [[UIView alloc]initWithFrame:CGRectMake(0, height + 5, width+20.f, 2)];
     splitline.backgroundColor = [UIColor grayColor];
@@ -39,23 +29,25 @@
     mapView2 = [[BMKMapView alloc]initWithFrame:CGRectMake(10, height + 8, width, height)];
     mapView2.mapType = BMKMapTypeStandard;
     mapView2.zoomLevel = 14;
+    mapView2.logoPosition = BMKLogoPositionRightBottom;
     [self.view addSubview:mapView2];
 }
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [mapView1 viewWillAppear];
     mapView1.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     [mapView2 viewWillAppear];
     mapView2.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [mapView1 viewWillDisappear];
     mapView1.delegate = nil; // 不用时，置nil
     [mapView2 viewWillDisappear];
     mapView2.delegate = nil; // 不用时，置nil
-   
 }
+
 - (void)viewDidUnload {
     [super viewDidUnload];
 }

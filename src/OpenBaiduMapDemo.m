@@ -15,12 +15,14 @@
 {
     [super viewDidLoad];
     _titleArray = [[NSArray alloc]initWithObjects:
-                      @"启动百度地图导航",
-                      @"启动百度地图POI周边检索",
-                      @"启动百度地图POI详情页面",
-                      @"启动百度地图步行路线规划",
-                      @"启动百度地图驾车路线规划",
-                      @"启动百度地图公交路线规划",
+                   @"启动百度地图驾车导航",
+                   @"启动百度地图POI周边检索",
+                   @"启动百度地图POI详情页面",
+                   @"启动百度地图步行路线规划",
+                   @"启动百度地图驾车路线规划",
+                   @"启动百度地图公交路线规划",
+                   @"启动百度地图步行导航",
+                   @"启动百度地图骑行导航",
                       nil];
     //适配ios7
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
@@ -83,6 +85,14 @@
             [self openMapTransitRoute];
             break;
             
+        case 6:
+            [self openMapWalkOrRideNavi:YES];
+            break;
+            
+        case 7:
+            [self openMapWalkOrRideNavi:NO];
+            break;
+            
         default:
             break;
     }
@@ -123,7 +133,6 @@
     //调启百度地图客户端导航
     [BMKNavigation openBaiduMapNavigation:para];
 }
-
 
 //打开地图 poi详情
 - (void)openMapPoiDetail {
@@ -242,6 +251,32 @@
     BMKOpenErrorCode code = [BMKOpenRoute openBaiduMapWalkingRoute:opt];
     NSLog(@"%d", code);
     return;
+}
+
+//打开客户端步行/骑行导航
+- (void)openMapWalkOrRideNavi:(BOOL) walk {
+    //初始化调启导航时的参数管理类
+    BMKNaviPara* para = [[BMKNaviPara alloc]init];
+    //初始化终点节点
+    BMKPlanNode* end = [[BMKPlanNode alloc]init];
+    //指定终点经纬度
+    end.pt = CLLocationCoordinate2DMake(39.90868, 116.3956);
+    //指定终点名称
+    end.name = @"天安门";
+    //指定终点
+    para.endPoint = end;
+    
+    //指定返回自定义scheme
+    para.appScheme = @"baidumapsdk://mapsdk.baidu.com";
+    
+    //调启百度地图客户端
+    if (walk) {
+        BMKOpenErrorCode code = [BMKNavigation openBaiduMapWalkNavigation:para];
+        NSLog(@"调起步行导航：errorcode=%d", code);
+    } else {
+        BMKOpenErrorCode code = [BMKNavigation openBaiduMapRideNavigation:para];
+        NSLog(@"调起骑行导航：errorcode=%d", code);
+    }
 }
 
 @end

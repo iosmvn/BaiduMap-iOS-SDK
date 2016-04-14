@@ -99,7 +99,7 @@
     }
     
     _clusterCaches = [[NSMutableArray alloc] init];
-    for (NSInteger i = 3; i < 21; i++) {
+    for (NSInteger i = 3; i < 22; i++) {
         [_clusterCaches addObject:[NSMutableArray array]];
     }
     

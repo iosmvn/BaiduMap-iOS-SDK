@@ -19,8 +19,6 @@
     NSString* shortUrl;
     //分享字符串
     NSString* showmeg;
-
-
 }
 @end
 @implementation ShortUrlShareDemoViewController
@@ -109,9 +107,11 @@
 //显示说明
 -(void)showGuide
 {
-    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"短串分享－说明" message:@"短串分享是将POI点、反Geo点，生成短链接串，此链接可通过短信等形式分享给好友，好友在终端设备点击此链接可快速打开Web地图、百度地图客户端进行信息展示" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"短串分享－说明" message:@"短串分享是将POI点、反Geo点、路线规划，生成短链接串，此链接可通过短信等形式分享给好友，好友在终端设备点击此链接可快速打开Web地图、百度地图客户端进行信息展示" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
     [myAlertView show];
 }
+
+#pragma mark - poiShortUrlShare
 
 //1.点击［poi搜索结果分享］先发起poi搜索
 -(IBAction)poiShortUrlShare
@@ -170,6 +170,27 @@
         }
 	} 
 }
+
+
+//3.返回短串分享url
+- (void)onGetPoiDetailShareURLResult:(BMKShareURLSearch *)searcher result:(BMKShareURLResult *)result errorCode:(BMKSearchErrorCode)error
+{
+    shortUrl = result.url;
+    if (error == BMK_SEARCH_NO_ERROR)
+    {
+        if(showmeg!=nil)
+        {
+            showmeg = nil;
+        }
+        showmeg = [NSString stringWithFormat:@"这里是:%@\r\n%@\r\n%@",geoName,addr,shortUrl];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"短串分享" message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"分享",@"取消",nil];
+        myAlertView.tag = 1000;
+        [myAlertView show];
+    }
+}
+
+#pragma mark - reverseGeoShortUrlShare
+
 //1.点击［反向地理编码结果分享］先发起反geo搜索
 -(IBAction)reverseGeoShortUrlShare
 {    
@@ -192,6 +213,7 @@
 
 
 }
+
 //2.搜索成功后在回调中根据参数发起geo短串搜索
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
 {
@@ -229,23 +251,6 @@
     }
 }
 
-//3.返回短串分享url
-- (void)onGetPoiDetailShareURLResult:(BMKShareURLSearch *)searcher result:(BMKShareURLResult *)result errorCode:(BMKSearchErrorCode)error
-{
-    shortUrl = result.url;
-    if (error == BMK_SEARCH_NO_ERROR)
-    {
-        if(showmeg!=nil)
-        {
-            showmeg = nil;
-        }
-        showmeg = [NSString stringWithFormat:@"这里是:%@\r\n%@\r\n%@",geoName,addr,shortUrl];
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"短串分享" message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"分享",@"取消",nil];
-        myAlertView.tag = 1000;
-        [myAlertView show];
-    }
-}
-
 - (void)onGetLocationShareURLResult:(BMKShareURLSearch *)searcher result:(BMKShareURLResult *)result errorCode:(BMKSearchErrorCode)error
 {
     shortUrl = result.url;
@@ -262,7 +267,71 @@
     }
 }
 
-#pragma mark UIAlertView delegate
+#pragma mark - routePlanShortUrlShare
+//路线规划短串分享url
+- (IBAction)routePlanShortUrlShare:(UISegmentedControl *)sender {
+    BMKRoutePlanShareURLOption *option = [[BMKRoutePlanShareURLOption alloc] init];
+    
+    switch (sender.selectedSegmentIndex) {
+        case 0://驾车
+            option.routePlanType = BMK_ROUTE_PLAN_SHARE_URL_TYPE_DRIVE;
+            break;
+            
+        case 1://步行
+            option.routePlanType = BMK_ROUTE_PLAN_SHARE_URL_TYPE_WALK;
+            break;
+            
+        case 2://骑行
+            option.routePlanType = BMK_ROUTE_PLAN_SHARE_URL_TYPE_RIDE;
+            break;
+            
+        case 3://公交
+            option.routePlanType = BMK_ROUTE_PLAN_SHARE_URL_TYPE_TRANSIT;
+            option.cityID = 131;//当进行公交路线规划短串分享且起终点通过关键字指定时，必须指定
+            option.routeIndex = 0;//公交路线规划短串分享时使用，分享的是第几条线路
+            break;
+            
+        default:
+            break;
+    }
+    
+    BMKPlanNode *fromNode = [[BMKPlanNode alloc] init];
+    fromNode.name = @"百度大厦";
+    fromNode.cityID = 131;
+    option.from = fromNode;
+    
+    BMKPlanNode *toNode = [[BMKPlanNode alloc] init];
+    toNode.name = @"天安门";
+    toNode.cityID = 131;
+    option.to = toNode;
+    
+    BOOL flag = [_shareurlsearch requestRoutePlanShareURL:option];
+    if (flag) {
+        NSLog(@"routePlanShortUrlShare检索发送成功");
+    } else {
+        NSLog(@"routePlanShortUrlShare检索发送失败");
+    }
+}
+
+/**
+ *返回路线规划分享url
+ *@param searcher 搜索对象
+ *@param result 返回结果
+ *@param error 错误号，@see BMKSearchErrorCode
+ */
+- (void)onGetRoutePlanShareURLResult:(BMKShareURLSearch *)searcher result:(BMKShareURLResult *)result errorCode:(BMKSearchErrorCode)error {
+    NSLog(@"onGetRoutePlanShareURLResult error:%d", (int)error);
+    if (error == BMK_SEARCH_NO_ERROR) {
+        shortUrl = result.url;
+        showmeg = [NSString stringWithFormat:@"分享的路线规划短串为：\r\n%@",shortUrl];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"短串分享" message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"分享",@"取消",nil];
+        myAlertView.tag = 1000;
+        [myAlertView show];
+    }
+}
+
+#pragma mark - UIAlertView delegate
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag ==1000 )

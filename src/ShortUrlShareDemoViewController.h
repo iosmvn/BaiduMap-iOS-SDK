@@ -23,5 +23,6 @@
 }
 -(IBAction)poiShortUrlShare;
 -(IBAction)reverseGeoShortUrlShare;
+- (IBAction)routePlanShortUrlShare:(UISegmentedControl *)sender;
 
 @end

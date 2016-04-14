@@ -34,17 +34,6 @@
 
 @implementation RouteSearchDemoViewController
 
-- (NSString*)getMyBundlePath1:(NSString *)filename
-{
-	
-	NSBundle * libBundle = MYBUNDLE ;
-	if ( libBundle && filename ){
-		NSString * s=[[libBundle resourcePath ] stringByAppendingPathComponent : filename];
-		return s;
-	}
-	return nil ;
-}
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -115,93 +104,7 @@
     [self.navigationController pushViewController:wayPointCont animated:YES];
 }
 
-- (BMKAnnotationView*)getRouteAnnotationView:(BMKMapView *)mapview viewForAnnotation:(RouteAnnotation*)routeAnnotation
-{
-	BMKAnnotationView* view = nil;
-	switch (routeAnnotation.type) {
-		case 0:
-		{
-			view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"start_node"];
-			if (view == nil) {
-				view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"start_node"];
-				view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_start.png"]];
-				view.centerOffset = CGPointMake(0, -(view.frame.size.height * 0.5));
-				view.canShowCallout = TRUE;
-			}
-			view.annotation = routeAnnotation;
-		}
-			break;
-		case 1:
-		{
-			view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"end_node"];
-			if (view == nil) {
-				view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"end_node"];
-				view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_end.png"]];
-				view.centerOffset = CGPointMake(0, -(view.frame.size.height * 0.5));
-				view.canShowCallout = TRUE;
-			}
-			view.annotation = routeAnnotation;
-		}
-			break;
-		case 2:
-		{
-			view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"bus_node"];
-			if (view == nil) {
-				view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"bus_node"];
-				view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_bus.png"]];
-				view.canShowCallout = TRUE;
-			}
-			view.annotation = routeAnnotation;
-		}
-			break;
-		case 3:
-		{
-			view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"rail_node"];
-			if (view == nil) {
-				view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"rail_node"];
-				view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_rail.png"]];
-				view.canShowCallout = TRUE;
-			}
-			view.annotation = routeAnnotation;
-		}
-			break;
-		case 4:
-		{
-			view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"route_node"];
-			if (view == nil) {
-				view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"route_node"];
-				view.canShowCallout = TRUE;
-			} else {
-				[view setNeedsDisplay];
-			}
-			
-			UIImage* image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_direction.png"]];
-			view.image = [image imageRotatedByDegrees:routeAnnotation.degree];
-			view.annotation = routeAnnotation;
-			
-		}
-			break;
-        case 5:
-        {
-            view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"waypoint_node"];
-			if (view == nil) {
-				view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"waypoint_node"];
-				view.canShowCallout = TRUE;
-			} else {
-				[view setNeedsDisplay];
-			}
-			
-			UIImage* image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_waypoint.png"]];
-			view.image = [image imageRotatedByDegrees:routeAnnotation.degree];
-			view.annotation = routeAnnotation;
-        }
-            break;
-		default:
-			break;
-	}
-	
-	return view;
-}
+#pragma mark - BMKMapViewDelegate
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation
 {
@@ -222,6 +125,8 @@
     }
 	return nil;
 }
+
+#pragma mark - BMKRouteSearchDelegate
 
 - (void)onGetTransitRouteResult:(BMKRouteSearch*)searcher result:(BMKTransitRouteResult*)result errorCode:(BMKSearchErrorCode)error
 {
@@ -409,6 +314,72 @@
 	}
 }
 
+/**
+ *返回骑行搜索结果
+ *@param searcher 搜索对象
+ *@param result 搜索结果，类型为BMKRidingRouteResult
+ *@param error 错误号，@see BMKSearchErrorCode
+ */
+- (void)onGetRidingRouteResult:(BMKRouteSearch *)searcher result:(BMKRidingRouteResult *)result errorCode:(BMKSearchErrorCode)error {
+    NSLog(@"onGetRidingRouteResult error:%d", (int)error);
+    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+    [_mapView removeAnnotations:array];
+    array = [NSArray arrayWithArray:_mapView.overlays];
+    [_mapView removeOverlays:array];
+    if (error == BMK_SEARCH_NO_ERROR) {
+        BMKRidingRouteLine* plan = (BMKRidingRouteLine*)[result.routes objectAtIndex:0];
+        NSInteger size = [plan.steps count];
+        int planPointCounts = 0;
+        for (int i = 0; i < size; i++) {
+            BMKRidingStep* transitStep = [plan.steps objectAtIndex:i];
+            if (i == 0) {
+                RouteAnnotation* item = [[RouteAnnotation alloc]init];
+                item.coordinate = plan.starting.location;
+                item.title = @"起点";
+                item.type = 0;
+                [_mapView addAnnotation:item]; // 添加起点标注
+            } else if(i==size-1){
+                RouteAnnotation* item = [[RouteAnnotation alloc]init];
+                item.coordinate = plan.terminal.location;
+                item.title = @"终点";
+                item.type = 1;
+                [_mapView addAnnotation:item]; // 添加起点标注
+            }
+            //添加annotation节点
+            RouteAnnotation* item = [[RouteAnnotation alloc]init];
+            item.coordinate = transitStep.entrace.location;
+            item.title = transitStep.instruction;
+            item.degree = (int)transitStep.direction * 30;
+            item.type = 4;
+            [_mapView addAnnotation:item];
+            
+            //轨迹点总数累计
+            planPointCounts += transitStep.pointsCount;
+        }
+        
+        //轨迹点
+        BMKMapPoint * temppoints = new BMKMapPoint[planPointCounts];
+        int i = 0;
+        for (int j = 0; j < size; j++) {
+            BMKRidingStep* transitStep = [plan.steps objectAtIndex:j];
+            int k=0;
+            for(k=0;k<transitStep.pointsCount;k++) {
+                temppoints[i].x = transitStep.points[k].x;
+                temppoints[i].y = transitStep.points[k].y;
+                i++;
+            }
+            
+        }
+        // 通过points构建BMKPolyline
+        BMKPolyline* polyLine = [BMKPolyline polylineWithPoints:temppoints count:planPointCounts];
+        [_mapView addOverlay:polyLine]; // 添加路线overlay
+        delete []temppoints;
+        [self mapViewFitPolyLine:polyLine];
+    }
+}
+
+#pragma mark - action
+
 -(IBAction)onClickBusSearch
 {
     BMKPlanNode* start = [[BMKPlanNode alloc]init];
@@ -462,7 +433,6 @@
 
 -(IBAction)onClickWalkSearch
 {    
-	
 	BMKPlanNode* start = [[BMKPlanNode alloc]init];
 	start.name = _startAddrText.text;
     start.cityName = @"北京市";
@@ -484,6 +454,129 @@
         NSLog(@"walk检索发送失败");
     }
 
+}
+
+- (IBAction)onClickRidingSearch:(id)sender {
+    BMKPlanNode* start = [[BMKPlanNode alloc]init];
+    start.name = _startAddrText.text;
+    start.cityName = @"北京市";
+    BMKPlanNode* end = [[BMKPlanNode alloc]init];
+    end.name = _endAddrText.text;
+    end.cityName = @"北京市";
+    
+    BMKRidingRoutePlanOption *option = [[BMKRidingRoutePlanOption alloc]init];
+    option.from = start;
+    option.to = end;
+    BOOL flag = [_routesearch ridingSearch:option];
+    if (flag)
+    {
+        NSLog(@"骑行规划检索发送成功");
+    }
+    else
+    {
+        NSLog(@"骑行规划检索发送失败");
+    }
+}
+
+#pragma mark - 私有
+
+- (NSString*)getMyBundlePath1:(NSString *)filename
+{
+    
+    NSBundle * libBundle = MYBUNDLE ;
+    if ( libBundle && filename ){
+        NSString * s=[[libBundle resourcePath ] stringByAppendingPathComponent : filename];
+        return s;
+    }
+    return nil ;
+}
+
+- (BMKAnnotationView*)getRouteAnnotationView:(BMKMapView *)mapview viewForAnnotation:(RouteAnnotation*)routeAnnotation
+{
+    BMKAnnotationView* view = nil;
+    switch (routeAnnotation.type) {
+        case 0:
+        {
+            view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"start_node"];
+            if (view == nil) {
+                view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"start_node"];
+                view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_start.png"]];
+                view.centerOffset = CGPointMake(0, -(view.frame.size.height * 0.5));
+                view.canShowCallout = TRUE;
+            }
+            view.annotation = routeAnnotation;
+        }
+            break;
+        case 1:
+        {
+            view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"end_node"];
+            if (view == nil) {
+                view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"end_node"];
+                view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_end.png"]];
+                view.centerOffset = CGPointMake(0, -(view.frame.size.height * 0.5));
+                view.canShowCallout = TRUE;
+            }
+            view.annotation = routeAnnotation;
+        }
+            break;
+        case 2:
+        {
+            view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"bus_node"];
+            if (view == nil) {
+                view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"bus_node"];
+                view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_bus.png"]];
+                view.canShowCallout = TRUE;
+            }
+            view.annotation = routeAnnotation;
+        }
+            break;
+        case 3:
+        {
+            view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"rail_node"];
+            if (view == nil) {
+                view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"rail_node"];
+                view.image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_rail.png"]];
+                view.canShowCallout = TRUE;
+            }
+            view.annotation = routeAnnotation;
+        }
+            break;
+        case 4:
+        {
+            view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"route_node"];
+            if (view == nil) {
+                view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"route_node"];
+                view.canShowCallout = TRUE;
+            } else {
+                [view setNeedsDisplay];
+            }
+            
+            UIImage* image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_direction.png"]];
+            view.image = [image imageRotatedByDegrees:routeAnnotation.degree];
+            view.annotation = routeAnnotation;
+            
+        }
+            break;
+        case 5:
+        {
+            view = [mapview dequeueReusableAnnotationViewWithIdentifier:@"waypoint_node"];
+            if (view == nil) {
+                view = [[BMKAnnotationView alloc]initWithAnnotation:routeAnnotation reuseIdentifier:@"waypoint_node"];
+                view.canShowCallout = TRUE;
+            } else {
+                [view setNeedsDisplay];
+            }
+            
+            UIImage* image = [UIImage imageWithContentsOfFile:[self getMyBundlePath1:@"images/icon_nav_waypoint.png"]];
+            view.image = [image imageRotatedByDegrees:routeAnnotation.degree];
+            view.annotation = routeAnnotation;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    return view;
 }
 
 //根据polyline设置地图范围

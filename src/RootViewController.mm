@@ -8,12 +8,36 @@
 
 #import "RootViewController.h"
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
 @implementation RootViewController
+
+//自定义地图样式
+- (void)customMapStyle {
+    //设置自定义地图样式，会影响所有地图实例
+    //注：必须在BMKMapView对象初始化之前调用
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"custom_config_清新蓝" ofType:@""];
+    [BMKMapView customMapStyle:path];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    [self customMapStyle];//自定义地图样式
+    
+    NSLog(@"base     component version: %@", BMKGetMapApiBaseComponentVersion());
+    NSLog(@"map      component version: %@", BMKGetMapApiMapComponentVersion());
+    NSLog(@"location component version: %@", BMKGetMapApiLocationComponentVersion());
+    NSLog(@"search   component version: %@", BMKGetMapApiSearchComponentVersion());
+    NSLog(@"cloud    component version: %@", BMKGetMapApiCloudComponentVersion());
+    NSLog(@"radar    component version: %@", BMKGetMapApiRadarComponentVersion());
+    NSLog(@"utils    component version: %@", BMKGetMapApiUtilsComponentVersion());
+    
     _demoNameArray = [[NSArray alloc]initWithObjects:
                       @"基本地图功能-MapViewBaseDemo",
                       @"多地图使用功能-MultiMapViewDemo",
@@ -27,6 +51,7 @@
                       @"地理编码功能-GeocodeDemo",
 					  @"路径规划功能-RouteSearchDemo",
                       @"公交线路查询-BusLineSearch",
+                      @"行政区域检索功能-DistrictSearchDemo",
 					  @"离线地图功能-OfflineDemo",
                       @"热力图功能-HeatMapDemo",
                       @"短串分享功能-ShortUrlShareDemo",
@@ -51,6 +76,7 @@
                                  @"地理编码功能",
                                  @"路径规划功能",
                                  @"公交线路查询",
+                                 @"行政区域检索功能",
                                  @"离线地图功能",
                                  @"热力图功能",
                                  @"短串分享功能",
@@ -76,6 +102,7 @@
                             @"GeocodeDemoViewController",
                             @"RouteSearchDemoViewController",
                             @"BusLineSearchViewController",
+                            @"DistrictSearchDemoViewController",
                             @"OfflineDemoViewController",
                             @"HeatMapDemo",
                             @"ShortUrlShareDemoViewController",
@@ -124,7 +151,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController* viewController = nil;
-    if (indexPath.row < 18) {
+    if (indexPath.row < 19 && indexPath.row != 12) {
         viewController = [[NSClassFromString([_viewControllerArray objectAtIndex:indexPath.row]) alloc] init];
     } else {
         viewController = [[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil] instantiateViewControllerWithIdentifier:[_viewControllerArray objectAtIndex:indexPath.row]];

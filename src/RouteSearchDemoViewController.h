@@ -21,6 +21,7 @@
 -(IBAction)onClickBusSearch;
 -(IBAction)onClickDriveSearch;
 -(IBAction)onClickWalkSearch;
+- (IBAction)onClickRidingSearch:(id)sender;
 - (IBAction)textFiledReturnEditing:(id)sender;
 
 

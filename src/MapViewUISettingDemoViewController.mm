@@ -31,13 +31,12 @@
     _scaleSwith.on = NO;
     _mapView.overlooking = -30;
     _mapView.frame = CGRectMake(0, _mapView.frame.origin.y, _mapView.frame.size.width, self.view.frame.size.height - _mapView.frame.origin.y);
+    [self setMapPadding];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -55,6 +54,19 @@
     }
 }
 
+- (void)setMapPadding {
+    ///地图预留边界，默认：UIEdgeInsetsZero。设置后，会根据mapPadding调整logo、比例尺、指南针的位置，以及targetScreenPt(BMKMapStatus.targetScreenPt)
+    _mapView.mapPadding = UIEdgeInsetsMake(0, 0, 28, 0);
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, _mapView.frame.origin.y + _mapView.frame.size.height - 92, self.view.frame.size.width, 28)];
+    label.text = @"已设置mapPadding为(0, 0, 28, 0)";
+    label.font = [UIFont systemFontOfSize:13];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor whiteColor];
+    label.alpha = 0.7;
+    [self.view addSubview:label];
+    [self.view bringSubviewToFront:label];
+}
 
 #pragma mark 底图手势开关
 
@@ -72,9 +84,15 @@
     UISwitch *tempSwitch = (UISwitch *)sender;
     _mapView.showMapScaleBar = [tempSwitch isOn];
     //自定义比例尺的位置
-    _mapView.mapScaleBarPosition = CGPointMake(_mapView.frame.size.width - 70, _mapView.frame.size.height - 40);
+    _mapView.mapScaleBarPosition = CGPointMake(_mapView.frame.size.width - 70, _mapView.frame.size.height - 68);
 }
-#pragma mark 指南针位置
+
+- (IBAction)allGestureEnableAction:(UISwitch *)sender {
+    _mapView.gesturesEnabled = [sender isOn];
+}
+
+#pragma mark - 指南针位置
+
 - (IBAction)compassSegAction:(UISegmentedControl *)sender {
     UISegmentedControl *tempSeg = (UISegmentedControl *)sender;
     CGPoint pt;

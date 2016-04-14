@@ -63,11 +63,24 @@
         [self addLocalTile];
     } else if (segmented.selectedSegmentIndex == 2) {//在线
         [self addUrlTile];
+    } else {
+        _mapView.mapType = BMKMapTypeStandard;
     }
 }
 
 //添加本地瓦片图
 - (void)addLocalTile {
+    //限制地图显示范围
+    _mapView.maxZoomLevel = 17.4;
+    _mapView.minZoomLevel = 16;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(39.923018, 116.404440);
+    BMKCoordinateSpan span = BMKCoordinateSpanMake(0.013142, 0.011678);
+    _mapView.limitMapRegion = BMKCoordinateRegionMake(center, span);
+    _mapView.overlookEnabled = NO;
+    _mapView.rotateEnabled = NO;//禁用旋转手势
+    _mapView.mapType = BMKMapTypeNone;
+    
+    
     LocalTileLayer *localTileLayer = [[LocalTileLayer alloc] init];
     localTileLayer.visibleMapRect = BMKMapRectMake(32995300, 35855667, 1300, 1900);
     localTileLayer.maxZoom = 18;
@@ -77,12 +90,21 @@
 
 //添加在线瓦片图
 - (void)addUrlTile {
+    //限制地图显示范围
+    _mapView.maxZoomLevel = 18;
+    _mapView.minZoomLevel = 16;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(39.924257, 116.403263);
+    BMKCoordinateSpan span = BMKCoordinateSpanMake(0.038325, 0.028045);
+    _mapView.limitMapRegion = BMKCoordinateRegionMake(center, span);////限制地图显示范围
+    _mapView.overlookEnabled = NO;
+    _mapView.rotateEnabled = NO;//禁用旋转手势
+    _mapView.mapType = BMKMapTypeNone;
+    
     BMKURLTileLayer *urlTileLayer = [[BMKURLTileLayer alloc] initWithURLTemplate:@"http://api0.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&udt=20150601&customid=light"];
     urlTileLayer.visibleMapRect = BMKMapRectMake(32994258, 35853667, 3122, 5541);
     urlTileLayer.maxZoom = 18;
     urlTileLayer.minZoom = 16;
     [_mapView addOverlay:urlTileLayer];
-
 }
 
 #pragma mark - BMKMapViewDelegate

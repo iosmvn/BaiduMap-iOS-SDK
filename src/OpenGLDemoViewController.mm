@@ -57,6 +57,8 @@ typedef struct {
     mapPoints[2] = BMKMapPointForCoordinate(CLLocationCoordinate2DMake(39.865, 116.704));
     mapPoints[3] = BMKMapPointForCoordinate(CLLocationCoordinate2DMake(39.965, 116.704));
     mapDidFinishLoad = YES;
+    [self glRender:[mapView getMapStatus]];
+    [mapView mapForceRefresh];
 }
 
 /**

@@ -21,6 +21,9 @@
 - (IBAction)zoomSwitchAction:(UISwitch *)sender;
 - (IBAction)moveSwitchAction:(UISwitch *)sender;
 - (IBAction)scaleSwitchAction:(UISwitch *)sender;
+- (IBAction)allGestureEnableAction:(UISwitch *)sender;
+
+
 - (IBAction)compassSegAction:(UISegmentedControl *)sender;
 
 @end

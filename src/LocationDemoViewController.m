@@ -31,6 +31,12 @@
     [followHeadBtn setAlpha:0.6];
     [stopBtn setEnabled:NO];
     [stopBtn setAlpha:0.6];
+    
+    UIBarButtonItem* barItem = [[UIBarButtonItem alloc]init];
+    barItem.target = self;
+    barItem.action = @selector(customLocationAccuracyCircle);
+    barItem.title = @"自定义精度圈";
+    self.navigationItem.rightBarButtonItem = barItem;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -44,6 +50,15 @@
     _mapView.delegate = nil; // 不用时，置nil
     _locService.delegate = nil;
 }
+
+//自定义精度圈
+- (void)customLocationAccuracyCircle {
+    BMKLocationViewDisplayParam *param = [[BMKLocationViewDisplayParam alloc] init];
+    param.accuracyCircleStrokeColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.5];
+    param.accuracyCircleFillColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.3];
+    [_mapView updateLocationViewWithParam:param];
+}
+
 //普通态
 -(IBAction)startLocation:(id)sender
 {
