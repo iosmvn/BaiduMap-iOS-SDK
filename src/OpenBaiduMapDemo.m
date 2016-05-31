@@ -7,6 +7,13 @@
 //
 
 #import "OpenBaiduMapDemo.h"
+#import "PromptInfo.h"
+
+@interface OpenBaiduMapDemo()<BMKOpenPanoramaDelegate> {
+    BMKOpenPanorama *_openPanorama;//调起全景类
+}
+
+@end
 
 @implementation OpenBaiduMapDemo
 
@@ -23,12 +30,23 @@
                    @"启动百度地图公交路线规划",
                    @"启动百度地图步行导航",
                    @"启动百度地图骑行导航",
+                   @"调起百度地图全景",
                       nil];
     //适配ios7
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
     {
         self.navigationController.navigationBar.translucent = NO;
     }
+    
+    _openPanorama = [[BMKOpenPanorama alloc] init];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    _openPanorama.delegate = self;
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    _openPanorama.delegate = nil;
 }
 
 #pragma mark -
@@ -91,6 +109,10 @@
             
         case 7:
             [self openMapWalkOrRideNavi:NO];
+            break;
+            
+        case 8:
+            [self openMapPanorama];
             break;
             
         default:
@@ -277,6 +299,20 @@
         BMKOpenErrorCode code = [BMKNavigation openBaiduMapRideNavigation:para];
         NSLog(@"调起骑行导航：errorcode=%d", code);
     }
+}
+
+//调起全景
+- (void)openMapPanorama {
+    BMKOpenPanoramaOption *option = [[BMKOpenPanoramaOption alloc] init];
+    //指定返回自定义scheme
+    option.appScheme = @"baidumapsdk://mapsdk.baidu.com";
+    option.poiUid = @"65e1ee886c885190f60e77ff";
+    //调起百度地图全景页面,异步方法
+    [_openPanorama openBaiduMapPanorama:option];
+}
+
+- (void)onGetOpenPanoramaStatus:(BMKOpenErrorCode)ecode {
+    [PromptInfo showText:[NSString stringWithFormat:@"调起全景：errorcode=%d", ecode]];
 }
 
 @end

@@ -28,6 +28,12 @@
 
 @implementation PromptInfo
 static PromptInfo *toast=nil;
+static CGFloat PromptDefaultTopOffSet = 0.f;
+
++ (void)initialize {
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    PromptDefaultTopOffSet = screenHeight - 100;
+}
 
 - (void)dealloc{  
     [[NSNotificationCenter defaultCenter] removeObserver:self  
@@ -221,7 +227,7 @@ static PromptInfo *toast=nil;
 
 + (void)showText:(NSString*)text_
 {
-    [PromptInfo showWithText:text_ topOffset:200 duration:1.4];
+    [PromptInfo showWithText:text_ topOffset:PromptDefaultTopOffSet duration:1.4];
 }
 
 @end

@@ -50,7 +50,7 @@
  * @return BMKCluster数组
  */
 - (NSArray*)getClusters:(CGFloat) zoomLevel {
-    if (zoomLevel < 3 || zoomLevel > 20) {
+    if (zoomLevel < 3 || zoomLevel > 22) {
         return nil;
     }
     NSMutableArray *results = [NSMutableArray array];

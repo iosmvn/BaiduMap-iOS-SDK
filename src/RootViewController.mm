@@ -17,19 +17,10 @@
 
 @implementation RootViewController
 
-//自定义地图样式
-- (void)customMapStyle {
-    //设置自定义地图样式，会影响所有地图实例
-    //注：必须在BMKMapView对象初始化之前调用
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"custom_config_清新蓝" ofType:@""];
-    [BMKMapView customMapStyle:path];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self customMapStyle];//自定义地图样式
-    
+
     NSLog(@"base     component version: %@", BMKGetMapApiBaseComponentVersion());
     NSLog(@"map      component version: %@", BMKGetMapApiMapComponentVersion());
     NSLog(@"location component version: %@", BMKGetMapApiLocationComponentVersion());
@@ -39,7 +30,7 @@
     NSLog(@"utils    component version: %@", BMKGetMapApiUtilsComponentVersion());
     
     _demoNameArray = [[NSArray alloc]initWithObjects:
-                      @"基本地图功能-MapViewBaseDemo",
+                      @"基本/个性化地图功能-MapViewBaseDemo",
                       @"多地图使用功能-MultiMapViewDemo",
 					  @"图层展示功能-MapViewDemo",
                       @"地图操作功能-MapViewControlDemo",
@@ -62,9 +53,10 @@
                       @"周边雷达功能-Radar",
                       @"点聚合功能-ClusterDemo",
                       @"tileLayer功能-TileLayerDemo",
+                      @"室内功能-IndoorDemo",
 					  nil];
     _viewControllerTitleArray = [[NSArray alloc]initWithObjects:
-                                 @"基本地图功能",
+                                 @"地图功能",
                                  @"多地图使用功能",
                                  @"图层展示功能",
                                  @"地图操作功能",
@@ -87,6 +79,7 @@
                                  @"周边雷达功能",
                                  @"点聚合功能",
                                  @"tileLayer功能",
+                                 @"室内功能",
                                  nil];
     
     _viewControllerArray = [[NSArray alloc]initWithObjects:
@@ -113,6 +106,7 @@
                             @"RadarTabBarController",
                             @"ClusterDemoViewController",
                             @"TileLayerDemoViewController",
+                            @"IndoorDemoViewController",
                             nil];
 	self.title = [NSString stringWithFormat: @"欢迎使用百度地图iOS SDK %@", BMKGetMapApiVersion()];
     //适配ios7
@@ -134,7 +128,6 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     static NSString *CellIdentifier = @"BaiduMapApiDemoCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];

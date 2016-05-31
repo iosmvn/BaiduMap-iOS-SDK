@@ -87,7 +87,7 @@
 	
 	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
     annotationView.annotation = annotation;
-	annotationView.canShowCallout = TRUE;
+	annotationView.canShowCallout = YES;
     return annotationView;
 }
 - (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
@@ -106,7 +106,7 @@
         NSString* showmeg;
         
         titleStr = @"正向地理编码";
-        showmeg = [NSString stringWithFormat:@"经度:%f,纬度:%f",item.coordinate.latitude,item.coordinate.longitude];
+        showmeg = [NSString stringWithFormat:@"纬度:%f,经度:%f",item.coordinate.latitude,item.coordinate.longitude];
         
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
         [myAlertView show];

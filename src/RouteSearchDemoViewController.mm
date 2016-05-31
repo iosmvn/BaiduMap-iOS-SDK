@@ -419,6 +419,7 @@
     BMKDrivingRoutePlanOption *drivingRouteSearchOption = [[BMKDrivingRoutePlanOption alloc]init];
     drivingRouteSearchOption.from = start;
     drivingRouteSearchOption.to = end;
+    drivingRouteSearchOption.drivingRequestTrafficType = BMK_DRIVING_REQUEST_TRAFFICE_TYPE_NONE;//不获取路况信息
     BOOL flag = [_routesearch drivingSearch:drivingRouteSearchOption];
     if(flag)
     {

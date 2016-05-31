@@ -54,9 +54,7 @@
     }
     _mapView.delegate = self;
 	_buslinesearch = [[BMKBusLineSearch alloc]init];
-	_buslinesearch.delegate = self;
     _poisearch = [[BMKPoiSearch alloc]init];
-    _poisearch.delegate = self;
     
     currentIndex = -1;
     _busPoiArray = [[NSMutableArray alloc]init];
@@ -69,12 +67,14 @@
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _buslinesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    _poisearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
     _buslinesearch.delegate = nil; // 不用时，置nil
+    _poisearch.delegate = nil; // 不用时，置nil
 }
 
 
